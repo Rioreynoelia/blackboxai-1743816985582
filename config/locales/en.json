@@ -1,0 +1,23 @@
+{
+  "common": {
+    "welcome": "Welcome to Demplot",
+    "language": "Language",
+    "submit": "Submit",
+    "cancel": "Cancel"
+  },
+  "auth": {
+    "login": "Login",
+    "verify": "Verify Phone",
+    "logout": "Logout"
+  },
+  "dashboard": {
+    "farmer": {
+      "title": "Your Agro Trials",
+      "newTrial": "Record New Trial"
+    },
+    "company": {
+      "title": "Product Dashboard",
+      "addProduct": "Add Product"
+    }
+  }
+}
