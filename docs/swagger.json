@@ -1,0 +1,131 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Demplot API",
+    "version": "1.0.0",
+    "description": "API documentation for Demplot agricultural platform"
+  },
+  "servers": [
+    {
+      "url": "https://demplot.com/api",
+      "description": "Production server"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Authentication",
+      "description": "Phone verification and user management"
+    },
+    {
+      "name": "GIS",
+      "description": "Geospatial trial data operations"
+    },
+    {
+      "name": "Products",
+      "description": "Agro input product management"
+    },
+    {
+      "name": "Weather",
+      "description": "Weather forecasting endpoints"
+    }
+  ],
+  "paths": {
+    "/auth/request-otp": {
+      "post": {
+        "tags": ["Authentication"],
+        "summary": "Request OTP for phone verification",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PhoneRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OTP sent successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SuccessResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/gis/nearby": {
+      "get": {
+        "tags": ["GIS"],
+        "summary": "Get nearby agricultural trials",
+        "security": [{"BearerAuth": []}],
+        "responses": {
+          "200": {
+            "description": "List of nearby trials",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Trial"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "BearerAuth": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    },
+    "schemas": {
+      "PhoneRequest": {
+        "type": "object",
+        "properties": {
+          "phone": {
+            "type": "string",
+            "example": "+15005550006"
+          }
+        }
+      },
+      "Trial": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "example": "Corn Yield Test 2023"
+          },
+          "location": {
+            "$ref": "#/components/schemas/GeoPoint"
+          }
+        }
+      },
+      "GeoPoint": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": ["Point"]
+          },
+          "coordinates": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            },
+            "example": [-74.0060, 40.7128]
+          }
+        }
+      }
+    }
+  }
+}
