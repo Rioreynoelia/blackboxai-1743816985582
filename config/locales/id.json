@@ -1,0 +1,23 @@
+{
+  "common": {
+    "welcome": "Selamat datang di Demplot",
+    "language": "Bahasa",
+    "submit": "Kirim",
+    "cancel": "Batal"
+  },
+  "auth": {
+    "login": "Masuk",
+    "verify": "Verifikasi Telepon",
+    "logout": "Keluar"
+  },
+  "dashboard": {
+    "farmer": {
+      "title": "Percobaan Agro Anda",
+      "newTrial": "Catat Percobaan Baru"
+    },
+    "company": {
+      "title": "Dasbor Produk",
+      "addProduct": "Tambah Produk"
+    }
+  }
+}
