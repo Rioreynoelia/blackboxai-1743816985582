@@ -1,0 +1,36 @@
+groups:
+- name: demplot-alerts
+  rules:
+  - alert: HighErrorRate
+    expr: |
+      sum(rate(http_request_duration_ms_count{code=~"5.."}[1m])) by (route)
+      /
+      sum(rate(http_request_duration_ms_count[1m])) by (route)
+      > 0.05
+    for: 5m
+    labels:
+      severity: critical
+    annotations:
+      summary: "High error rate on {{ $labels.route }}"
+      description: "Error rate is {{ $value }} for route {{ $labels.route }}"
+
+  - alert: LatencySpike
+    expr: |
+      histogram_quantile(0.95, rate(http_request_duration_ms_bucket[1m]))
+      > 1000
+    for: 2m
+    labels:
+      severity: warning
+    annotations:
+      summary: "High latency on {{ $labels.route }}"
+      description: "95th percentile latency is {{ $value }}ms"
+
+  - alert: ServiceDown
+    expr: |
+      up{job="demplot-api"} == 0
+    for: 1m
+    labels:
+      severity: critical
+    annotations:
+      summary: "Service {{ $labels.instance }} is down"
+      description: "The API service has been down for more than 1 minute"
